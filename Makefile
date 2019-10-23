@@ -16,3 +16,12 @@ lint:
 
 run:
 	node dist/index.js
+
+dev:
+	make lint
+	make build
+	make run
+
+init:
+	make install
+	make dev
