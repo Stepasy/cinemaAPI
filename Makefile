@@ -13,3 +13,6 @@ publish:
 
 lint:
 	npx eslint .
+
+run:
+	node dist/index.js
