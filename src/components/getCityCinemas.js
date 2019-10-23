@@ -8,7 +8,7 @@ const getCityCinemas = async (cityId, bot, msg) => {
   });
   setTimeout(() => {
     bot.sendMessage(msg.chat.id, SELECT_CINEMA_MESSAGE);
-  }, 500);
+  }, 1000);
 };
 
 export default getCityCinemas;
