@@ -1,27 +1,18 @@
 import TelegramBot from 'node-telegram-bot-api';
-import { BOT_API_KEY } from './constants';
+import {
+  BOT_API_KEY,
+  HELLO_MESSAGE,
+} from './constants';
+import getUserCity from './components/getUserCity';
+import getCityCinemas from './components/getCityCinemas';
 
-// Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(BOT_API_KEY, { polling: true });
 
-// Matches "/echo [whatever]"
-bot.onText(/\/echo (.+)/, (msg, match) => {
-  // 'msg' is the received Message from Telegram
-  // 'match' is the result of executing the regexp above on the text content
-  // of the message
-
-  const chatId = msg.chat.id;
-  const resp = match[1]; // the captured "whatever"
-
-  // send back the matched "whatever" to the chat
-  bot.sendMessage(chatId, resp);
+bot.onText(/\/start/, (msg) => {
+  bot.sendMessage(msg.chat.id, HELLO_MESSAGE);
 });
 
-// Listen for any kind of message. There are different kinds of
-// messages.
-bot.on('message', (msg) => {
-  const chatId = msg.chat.id;
-
-  // send a message to the chat acknowledging receipt of their message
-  bot.sendMessage(chatId, 'Received your message');
+bot.onText(/\/city (.+)/, async (msg, match) => {
+  const cityId = await getUserCity(bot, msg, match);
+  getCityCinemas(cityId, bot, msg);
 });
