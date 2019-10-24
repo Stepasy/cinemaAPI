@@ -5,13 +5,13 @@ const getFilmSessions = async (cinemaId, filmId, bot, msg) => {
   response.forEach((value) => {
     value.times.forEach((time) => {
       bot.sendMessage(
-        msg.chat.id,
+        msg.message.chat.id,
         `
-          begin => ${value.begin}
-          end => ${value.end}
-          time => ${time.time}
-          prices => ${time.prices ? time.prices : 'Not available'}
-          link => ${time.ext_link ? time.ext_link : 'Not available'}
+          Дата начала => ${value.begin}
+          Дата конца => ${value.end}
+          Время => ${time.time}
+          Цены => ${time.prices ? time.prices : 'Не доступно'}
+          Ссылка для заказа => ${time.ext_link ? time.ext_link : 'Не доступно'}
         `,
       );
     });
