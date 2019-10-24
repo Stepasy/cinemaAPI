@@ -1,21 +1,25 @@
 import Api from '../Api/Api';
-import { CITY_ERROR_MESSAGE } from '../constants';
+import {
+  HELLO_MESSAGE,
+} from '../constants';
 
-const getUserCity = async (bot, msg, match) => {
-  const city = match[1];
-  let cityId = 0;
-
+const getUserCity = async (bot, msg) => {
   const response = await Api.getCity();
+  const buttons = [];
   response.forEach((value) => {
-    if (value.name === city) {
-      cityId = value.id;
-    }
+    buttons.push(
+      [{
+        text: value.name,
+        callback_data: `cityId_${value.id}`,
+      }],
+    );
   });
-
-  if (!cityId) {
-    bot.sendMessage(msg.chat.id, CITY_ERROR_MESSAGE);
-    return 0;
-  } return cityId;
+  const options = {
+    reply_markup: JSON.stringify({
+      inline_keyboard: buttons,
+    }),
+  };
+  bot.sendMessage(msg.chat.id, HELLO_MESSAGE, options);
 };
 
 export default getUserCity;
