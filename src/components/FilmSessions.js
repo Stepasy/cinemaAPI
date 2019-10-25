@@ -1,12 +1,14 @@
 import moment from 'moment';
 import Api from '../Api/Api';
+import Message from './Message';
 
 class FilmSessions {
   static async get(cinemaId, filmId, bot, msg) {
     const response = await Api.getFilmSession(cinemaId, filmId);
     response.forEach((value) => {
-      value.times.forEach((time) => {
-        bot.sendMessage(
+      value.times.forEach(async (time) => {
+        await Message.send(
+          bot,
           msg.message.chat.id,
           `
 Дата начала => ${value.begin}
