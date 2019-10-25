@@ -1,8 +1,8 @@
-import getUserCity from '../components/getUserCity';
+import UserCity from '../components/UserCity';
 
 const messageCityController = (bot) => {
   bot.onText(/\/city/, async (msg) => {
-    await getUserCity(bot, msg);
+    await UserCity.get(bot, msg);
   });
 };
 

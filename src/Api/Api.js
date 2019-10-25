@@ -8,45 +8,46 @@ import {
 } from '../constants';
 
 class Api {
-  static async getCity() {
+  static async createRequest(url) {
     const response = await axios({
       method: 'get',
-      url: `${API_URL}/cities?${CINEMA_API_KEY}&${QUERY_SIZE}`,
-      headers: { 'Accept-Language': 'ru-ru' },
-    });
-
-    return response.data.content;
-  }
-
-  static async getCinemas(cityId) {
-    const response = await axios({
-      method: 'get',
-      url: `${API_URL}/city/${cityId}/cinemas?${CINEMA_API_KEY}&${QUERY_SIZE}`,
-      headers: { 'Accept-Language': 'ru-ru' },
-    });
-
-    return response.data.content;
-  }
-
-  static async getCinemaFilms(cinemaId) {
-    const date = moment().format('YYYY-MM-DD');
-    const response = await axios({
-      method: 'get',
-      url: `${API_URL}/cinema/${cinemaId}/shows?${CINEMA_API_KEY}&${QUERY_SIZE}&date=${date}&${QUERY_DETALISATION}`,
+      url,
       headers: { 'Accept-Language': 'ru-ru' },
     });
 
     return response.data;
   }
 
+  static createDate() {
+    return moment().format('YYYY-MM-DD');
+  }
+
+  static async getCity() {
+    const response = await this
+      .createRequest(`${API_URL}/cities?${CINEMA_API_KEY}&${QUERY_SIZE}`);
+
+    return response.content;
+  }
+
+  static async getCinemas(cityId) {
+    const response = await this
+      .createRequest(`${API_URL}/city/${cityId}/cinemas?${CINEMA_API_KEY}&${QUERY_SIZE}`);
+
+    return response.content;
+  }
+
+  static async getCinemaFilms(cinemaId) {
+    const response = await this
+      .createRequest(`${API_URL}/cinema/${cinemaId}/shows?${CINEMA_API_KEY}&${QUERY_SIZE}&date=${this.createDate()}&${QUERY_DETALISATION}`);
+
+    return response;
+  }
+
   static async getFilmSession(cinemaId, filmId) {
-    const date = moment().format('YYYY-MM-DD');
-    const response = await axios({
-      method: 'get',
-      url: `${API_URL}/cinema/${cinemaId}/film/${filmId}/shows?${CINEMA_API_KEY}&${QUERY_SIZE}&date=${date}&${QUERY_DETALISATION}`,
-      headers: { 'Accept-Language': 'ru-ru' },
-    });
-    return response.data.content;
+    const response = await this
+      .createRequest(`${API_URL}/cinema/${cinemaId}/film/${filmId}/shows?${CINEMA_API_KEY}&${QUERY_SIZE}&date=${this.createDate()}&${QUERY_DETALISATION}`);
+
+    return response.content;
   }
 }
 

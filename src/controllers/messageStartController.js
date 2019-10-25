@@ -1,10 +1,10 @@
 import { HELLO_MESSAGE } from '../constants';
-import getCityCinemas from '../components/getCityCinemas';
+import CityCinemas from '../components/CityCinemas';
 
 const messageStartController = (bot) => {
   bot.onText(/\/start/, async (msg) => {
-    bot.sendMessage(msg.chat.id, HELLO_MESSAGE);
-    await getCityCinemas(13, bot, msg);
+    await bot.sendMessage(msg.chat.id, HELLO_MESSAGE);
+    await CityCinemas.get(13, bot, msg);
   });
 };
 

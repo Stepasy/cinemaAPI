@@ -1,6 +1,6 @@
-import getCinemaShows from '../components/getCinemaShows';
-import getFilmSessions from '../components/getFilmSessions';
-import getCityCinemas from '../components/getCityCinemas';
+import CinemaShows from '../components/CinemaShows';
+import FilmSessions from '../components/FilmSessions';
+import CityCinemas from '../components/CityCinemas';
 
 const selectController = (bot) => {
   bot.on('callback_query', async (msg) => {
@@ -10,15 +10,15 @@ const selectController = (bot) => {
     const cinemaId = answer[2] ? answer[2] : 0;
 
     if (button === 'cityId') {
-      await getCityCinemas(id, bot, msg);
+      await CityCinemas.get(id, bot, msg);
     }
 
     if (button === 'cinemaId') {
-      await getCinemaShows(id, bot, msg);
+      await CinemaShows.get(id, bot, msg);
     }
 
     if (button === 'filmId') {
-      await getFilmSessions(cinemaId, id, bot, msg);
+      await FilmSessions.get(cinemaId, id, bot, msg);
     }
   });
 };
