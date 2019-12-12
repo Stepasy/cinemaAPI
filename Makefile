@@ -5,6 +5,7 @@ start:
 	npx babel-node src/index.js
 
 build:
+	make install
 	rm -rf dist
 	npm run build
 
